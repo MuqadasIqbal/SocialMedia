@@ -65,7 +65,7 @@ FirebaseDatabase database;
                                     Toast.makeText(SignUpActivity.this, "Data Save", Toast.LENGTH_SHORT).show();
                                     Intent intent=new Intent(SignUpActivity.this,Login.class);
                                     startActivity(intent);
-                                    finish();
+                                    finishAffinity();
                                 }
                                 else {
                                     Toast.makeText(SignUpActivity.this, "Error", Toast.LENGTH_SHORT).show();

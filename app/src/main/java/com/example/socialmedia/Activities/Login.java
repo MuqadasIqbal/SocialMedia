@@ -47,7 +47,7 @@ FirebaseUser currentUser;
                         if (task.isSuccessful()){
                             Intent intent=new Intent(Login.this,MainActivity.class);
                             startActivity(intent);
-                            finish();
+                            finishAffinity();
                         }else{
                             Toast.makeText(Login.this, "Please Register", Toast.LENGTH_LONG).show();
                         }
@@ -59,7 +59,7 @@ FirebaseUser currentUser;
             @Override
             public void onClick(View view) {
               startActivity(new Intent(Login.this, SignUpActivity.class));
-              finish();
+              finishAffinity();
             }
         });
     }
@@ -70,6 +70,7 @@ FirebaseUser currentUser;
         if (currentUser!=null){
             Intent intent=new Intent(Login.this,MainActivity.class);
             startActivity(intent);
+            finishAffinity();
         }
     }
 }

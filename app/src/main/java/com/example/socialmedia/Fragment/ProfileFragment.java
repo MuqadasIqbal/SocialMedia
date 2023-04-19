@@ -68,11 +68,12 @@ public class ProfileFragment extends Fragment {
 
                     Picasso.with(getContext())
                             .load(user.getProfile())
-                            .placeholder(R.drawable.placeholder)
+                            .placeholder(R.drawable.avatar)
                             .into(binding.profileImage);
 
                     binding.userName.setText(user.getName());
                     binding.profession.setText(user.getProfession());
+                    binding.followers.setText(user.getFollowerCount()+"");
                 }
             }
 
@@ -94,6 +95,7 @@ public class ProfileFragment extends Fragment {
         database.getReference().child("Users").child(auth.getUid()).child("followers").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
                 for (DataSnapshot dataSnapshot:snapshot.getChildren()){
                     Follow follow=dataSnapshot.getValue(Follow.class);
                     list.add(follow);

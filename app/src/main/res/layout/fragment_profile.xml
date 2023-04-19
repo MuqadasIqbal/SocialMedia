@@ -190,10 +190,9 @@
           android:paddingEnd="8dp">
 
          <TextView
-             android:id="@+id/textView5"
+             android:id="@+id/text"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-
              android:text="Followers"
              android:textSize="@dimen/_10font_mdp"
              app:layout_constraintEnd_toStartOf="@+id/view3"
@@ -202,19 +201,19 @@
              app:layout_constraintTop_toTopOf="parent" />
 
          <TextView
-             android:id="@+id/textView8"
+             android:id="@+id/followers"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_marginEnd="21dp"
-             android:text="4654"
+             android:text="454"
              android:textColor="@color/black"
              android:textSize="@dimen/_14mdp"
              app:layout_constraintBottom_toBottomOf="parent"
-             app:layout_constraintEnd_toEndOf="@+id/textView5"
-             app:layout_constraintHorizontal_bias="0.0"
-             app:layout_constraintStart_toStartOf="@+id/textView5"
-             app:layout_constraintTop_toBottomOf="@+id/textView5"
-             app:layout_constraintVertical_bias="0.533" />
+             app:layout_constraintEnd_toEndOf="@+id/text"
+             app:layout_constraintHorizontal_bias="1.0"
+             app:layout_constraintStart_toStartOf="@+id/text"
+             app:layout_constraintTop_toBottomOf="@+id/text"
+             app:layout_constraintVertical_bias="0.0" />
 
          <View
              android:id="@+id/view3"
@@ -224,13 +223,13 @@
              android:layout_marginBottom="8dp"
              android:background="@color/shadow"
              app:layout_constraintBottom_toBottomOf="parent"
-             app:layout_constraintEnd_toStartOf="@+id/textView6"
+             app:layout_constraintEnd_toStartOf="@+id/friends"
              app:layout_constraintHorizontal_bias="0.5"
-             app:layout_constraintStart_toEndOf="@+id/textView5"
-             app:layout_constraintTop_toTopOf="@+id/textView5" />
+             app:layout_constraintStart_toEndOf="@+id/text"
+             app:layout_constraintTop_toTopOf="@+id/text" />
 
          <TextView
-             android:id="@+id/textView6"
+             android:id="@+id/friends"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="Friends"
@@ -241,16 +240,16 @@
              app:layout_constraintTop_toTopOf="parent" />
 
          <TextView
-             android:id="@+id/textView9"
+             android:id="@+id/friend"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_marginEnd="3dp"
              android:text="456"
              android:textColor="@color/black"
              android:textSize="@dimen/_14mdp"
-             app:layout_constraintEnd_toEndOf="@+id/textView6"
-             app:layout_constraintStart_toStartOf="@+id/textView6"
-             app:layout_constraintTop_toBottomOf="@+id/textView6" />
+             app:layout_constraintEnd_toEndOf="@+id/friends"
+             app:layout_constraintStart_toStartOf="@+id/friends"
+             app:layout_constraintTop_toBottomOf="@+id/friends" />
 
          <View
              android:id="@+id/view4"
@@ -262,8 +261,8 @@
              app:layout_constraintBottom_toBottomOf="parent"
              app:layout_constraintEnd_toStartOf="@+id/textView7"
              app:layout_constraintHorizontal_bias="0.5"
-             app:layout_constraintStart_toEndOf="@+id/textView6"
-             app:layout_constraintTop_toTopOf="@+id/textView6" />
+             app:layout_constraintStart_toEndOf="@+id/friends"
+             app:layout_constraintTop_toTopOf="@+id/friends" />
 
          <TextView
              android:id="@+id/textView7"
@@ -277,7 +276,7 @@
              app:layout_constraintTop_toTopOf="parent" />
 
          <TextView
-             android:id="@+id/textView10"
+             android:id="@+id/photo"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="186"
