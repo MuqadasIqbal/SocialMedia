@@ -65,4 +65,8 @@ dependencies {
     implementation 'io.github.florent37:shapeofview:1.4.7'
     //
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    //Time Ago
+    implementation 'com.github.marlonlom:timeago:4.0.3'
+    //Status
+    implementation 'com.github.3llomi:CircularStatusView:V1.0.3'
 }

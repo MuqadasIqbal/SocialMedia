@@ -6,6 +6,28 @@ private String postImage;
 private String postedBy;
 private String postDescription;
 private long postAt;
+private int postLike;
+private  int commentCount;
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public Post(int postLike) {
+        this.postLike = postLike;
+    }
+
+    public int getPostLike() {
+        return postLike;
+    }
+
+    public void setPostLike(int postLike) {
+        this.postLike = postLike;
+    }
 
     public Post() {
     }
@@ -16,6 +38,7 @@ private long postAt;
         this.postedBy = postedBy;
         this.postDescription = postDescription;
         this.postAt = postAt;
+
     }
 
     public String getPostId() {

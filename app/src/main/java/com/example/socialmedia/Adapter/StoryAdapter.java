@@ -8,18 +8,25 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.socialmedia.Model.StoryModel;
+import com.example.socialmedia.Model.Story;
+import com.example.socialmedia.Model.User;
+import com.example.socialmedia.Model.UserStories;
 import com.example.socialmedia.R;
 import com.example.socialmedia.databinding.StoryRvDesignBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.viewHolder> {
 
-    ArrayList<StoryModel> list;
+    ArrayList<Story> list;
     Context context;
 
-    public StoryAdapter(ArrayList<StoryModel> list, Context context) {
+    public StoryAdapter(ArrayList<Story> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -33,11 +40,30 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.viewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        StoryModel model=list.get(position);
-        holder.binding.story.setImageResource(model.getStory());
-        holder.binding.storyType.setImageResource(model.getStoryType());
-        holder.binding.profileImage.setImageResource(model.getProfile());
-        holder.binding.name.setText(model.getName());
+        Story story=list.get(position);
+
+       /* UserStories lastStory=story.getStories().get(story.getStories().size()-1);
+        Picasso.with(context).load(lastStory.getImage()).into(holder.binding.story);
+
+        holder.binding.statuscircle.setPortionsCount(story.getStories().size());
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("Users").child(story.getStoryBy()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        User user=snapshot.getValue(User.class);
+                        Picasso.with(context).load(user.getProfile())
+                                .placeholder(R.drawable.avatar)
+                                .into(holder.binding.profileImage);
+                        holder.binding.name.setText(user.getName());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });*/
+
 
     }
 
