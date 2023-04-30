@@ -53,9 +53,9 @@
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/postImg"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_150mdp"
+        android:layout_height="@dimen/_160mdp"
         android:layout_marginTop="16dp"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         android:src="@drawable/mehrab"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

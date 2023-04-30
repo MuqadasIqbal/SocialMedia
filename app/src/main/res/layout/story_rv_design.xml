@@ -6,11 +6,11 @@
     android:layout_height="wrap_content">
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/story"
+        android:id="@+id/storyImg"
         android:layout_width="@dimen/_130mdp"
         android:layout_height="@dimen/_85mdp"
         android:layout_marginEnd="16dp"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         android:src="@drawable/doll"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
         android:padding="4dp"
         app:civ_border_color="@color/white"
         android:src="@drawable/mehrab"
-        app:layout_constraintStart_toStartOf="@id/story"
+        app:layout_constraintStart_toStartOf="@id/storyImg"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.devlomi.circularstatusview.CircularStatusView
@@ -53,7 +53,7 @@
         android:layout_height="@dimen/_20mdp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/story"
+        app:layout_constraintEnd_toEndOf="@+id/storyImg"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/live" />
 
@@ -65,7 +65,7 @@
         android:text="Amain"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/story"
-        app:layout_constraintStart_toStartOf="@+id/story" />
+        app:layout_constraintBottom_toBottomOf="@+id/storyImg"
+        app:layout_constraintStart_toStartOf="@+id/storyImg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

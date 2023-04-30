@@ -53,7 +53,7 @@ ArrayList<Comment>list;
                 Picasso.with(context).load(user.getProfile())
                         .placeholder(R.drawable.avatar).into(holder.binding.friendsImg);
 
-                holder.binding.comment.setText(Html.fromHtml("<b>"+user.getName())+"</b>"+comment.getCommentBody());
+                holder.binding.comment.setText(Html.fromHtml("<b>"+user.getName()+"</b>"+"\n"+comment.getCommentBody()));
             }
 
             @Override

@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.socialmedia.Model.Follow;
+import com.example.socialmedia.Model.Notification;
 import com.example.socialmedia.Model.User;
 import com.example.socialmedia.R;
 import com.example.socialmedia.databinding.UserSampleBinding;
@@ -93,6 +94,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewHolder> {
                                                                     holder.binding.followBtn.setTextColor(context.getResources().getColor(R.color.gray));
                                                                     holder.binding.followBtn.setEnabled(false);
                                                                     Toast.makeText(context, "You Followed"+user.getName(), Toast.LENGTH_SHORT).show();
+
+                                                                    Notification notification=new Notification();
+                                                                    notification.setNotificationBy(FirebaseAuth.getInstance().getUid());
+                                                                    notification.setNotificationAt(new Date().getTime());
+                                                                    notification.setType("follow");
+
+                                                                    FirebaseDatabase.getInstance().getReference()
+                                                                            .child("notification").child(user.getUserID()).push().setValue(notification);
                                                                 }
                                                             });
                                                 }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.socialmedia.Model.Story;
@@ -20,6 +21,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import omari.hamza.storyview.StoryView;
+import omari.hamza.storyview.callback.StoryClickListeners;
+import omari.hamza.storyview.model.MyStory;
 
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.viewHolder> {
 
@@ -42,8 +47,9 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.viewHolder> 
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         Story story=list.get(position);
 
-       /* UserStories lastStory=story.getStories().get(story.getStories().size()-1);
-        Picasso.with(context).load(lastStory.getImage()).into(holder.binding.story);
+        if (story.getStories().size() > 0) {
+            UserStories lastStory=story.getStories().get(story.getStories().size()-1);
+        Picasso.with(context).load(lastStory.getImage()).into(holder.binding.storyImg);
 
         holder.binding.statuscircle.setPortionsCount(story.getStories().size());
 
@@ -56,15 +62,49 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.viewHolder> 
                                 .placeholder(R.drawable.avatar)
                                 .into(holder.binding.profileImage);
                         holder.binding.name.setText(user.getName());
+
+                        holder.binding.storyImg.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                ArrayList<MyStory> myStories = new ArrayList<>();
+
+                                for(UserStories stories: story.getStories()){
+                                    myStories.add(new MyStory(
+                                            stories.getImage()
+
+                                    ));
+                                }
+
+                                new StoryView.Builder( ((AppCompatActivity) context).getSupportFragmentManager())
+                                        .setStoriesList(myStories) // Required
+                                        .setStoryDuration(5000) // Default is 2000 Millis (2 Seconds)
+                                        .setTitleText(user.getName()) // Default is Hidden
+                                        .setSubtitleText("") // Default is Hidden
+                                        .setTitleLogoUrl(user.getProfile()) // Default is Hidden
+                                        .setStoryClickListeners(new StoryClickListeners() {
+                                            @Override
+                                            public void onDescriptionClickListener(int position) {
+                                                //your action
+                                            }
+
+                                            @Override
+                                            public void onTitleIconClickListener(int position) {
+                                                //your action
+                                            }
+                                        }) // Optional Listeners
+                                        .build() // Must be called before calling show method
+                                        .show();
+                            }
+                        });
                     }
+
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
-                });*/
-
-
+                });
+        }
     }
 
     @Override

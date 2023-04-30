@@ -31,7 +31,7 @@
              android:id="@+id/coverImage"
              android:layout_width="match_parent"
              android:layout_height="@dimen/_230mdp"
-             android:scaleType="centerCrop"
+             android:scaleType="fitXY"
              android:src="@drawable/alia" />
 
          <!-- YOUR CONTENT -->

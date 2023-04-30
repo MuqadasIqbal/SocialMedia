@@ -1,6 +1,7 @@
 package com.example.socialmedia.Fragment;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -44,6 +45,7 @@ FirebaseAuth auth;
 FirebaseDatabase database;
 ActivityResultLauncher<String>galleryLauncher;
 FirebaseStorage storage;
+ProgressDialog dialog;
     public HomeFragment() {
 
     }
@@ -52,9 +54,16 @@ FirebaseStorage storage;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater,container,false);
+        binding.dashboardRecylr.showShimmerAdapter();
+        dialog=new ProgressDialog(getContext());
         database=FirebaseDatabase.getInstance();
         auth=FirebaseAuth.getInstance();
         storage=FirebaseStorage.getInstance();
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setTitle("Story Uploading");
+        dialog.setMessage("Please wait...");
+        dialog.setCancelable(false);
+
 
         storylist=new ArrayList<>();
         StoryAdapter adapter=new StoryAdapter(storylist,getContext());
@@ -67,6 +76,7 @@ FirebaseStorage storage;
            @Override
            public void onDataChange(@NonNull DataSnapshot snapshot) {
               if (snapshot.exists()){
+                  storylist.clear();
                   for (DataSnapshot storySnapshot:snapshot.getChildren()){
                       Story story=new Story();
                       story.setStoryBy(storySnapshot.getKey());
@@ -95,7 +105,7 @@ FirebaseStorage storage;
         PostAdapter postAdapter =new PostAdapter(postlist,getContext());
         LinearLayoutManager layoutManager1=new LinearLayoutManager(getContext());
         binding.dashboardRecylr.setLayoutManager(layoutManager1);
-       binding.dashboardRecylr.setAdapter(postAdapter);
+
 
        database.getReference().child("posts").addValueEventListener(new ValueEventListener() {
            @Override
@@ -106,6 +116,8 @@ FirebaseStorage storage;
                    post.setPostId(dataSnapshot.getKey());
                    postlist.add(post);
                }
+               binding.dashboardRecylr.setAdapter(postAdapter);
+               binding.dashboardRecylr.hideShimmerAdapter();
                postAdapter.notifyDataSetChanged();
            }
 
@@ -114,7 +126,7 @@ FirebaseStorage storage;
 
            }
        });
-       binding.imageView1.setOnClickListener(new View.OnClickListener() {
+       binding.addStoryImage.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
                galleryLauncher.launch("image/*");
@@ -125,7 +137,8 @@ FirebaseStorage storage;
            @Override
            public void onActivityResult(Uri result) {
 
-               binding.imageView1.setImageURI(result);
+               binding.addStoryImage.setImageURI(result);
+               dialog.show();
                final StorageReference reference=storage.getReference()
                        .child("stories").child(FirebaseAuth.getInstance().getUid())
                        .child(new Date().getTime()+"");
@@ -146,7 +159,12 @@ FirebaseStorage storage;
 
                                          database.getReference()
                                                  .child("stories").child(FirebaseAuth.getInstance()
-                                                         .getUid()).child("userStories").push();
+                                                         .getUid()).child("userStories").push().setValue(stories).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                     @Override
+                                                     public void onSuccess(Void unused) {
+                                                         dialog.dismiss();
+                                                     }
+                                                 });
                                      }
                                  });
                         }

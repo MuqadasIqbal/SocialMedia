@@ -1,6 +1,8 @@
 package com.example.socialmedia.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,17 +11,24 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.socialmedia.Model.NotificationModel;
+import com.example.socialmedia.Activities.CommentActivity;
+import com.example.socialmedia.Model.Notification;
+import com.example.socialmedia.Model.User;
 import com.example.socialmedia.R;
 import com.example.socialmedia.databinding.NotificationsampleBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.viewHolder>{
-ArrayList<NotificationModel>list;
+ArrayList<Notification>list;
 Context context;
 
-    public NotificationAdapter(ArrayList<NotificationModel> list, Context context) {
+    public NotificationAdapter(ArrayList<Notification> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -33,10 +42,55 @@ Context context;
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        NotificationModel model=list.get(position);
-        holder.binding.profileImage.setImageResource(model.getProfile());
-        holder.binding.notification.setText(Html.fromHtml(model.getNotification()));
-        holder.binding.time.setText(Html.fromHtml(model.getTime()));
+        Notification notification=list.get(position);
+        String type=notification.getType();
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("Users").child(notification.getNotificationBy()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        User user=snapshot.getValue(User.class);
+                        Picasso.with(context).load(user.getProfile())
+                                .placeholder(R.drawable.avatar).into(holder.binding.profileImage);
+
+                        if (type.equals("like")){
+                            holder.binding.notification.setText(Html.fromHtml("<b>"+user.getName()+"</b>"+"liked your post"));
+                        }else if(type.equals("comment")){
+                            holder.binding.notification.setText(Html.fromHtml("<b>"+user.getName()+"</b>"+"Commented on your post"));
+                        }else {
+                            holder.binding.notification.setText(Html.fromHtml("<b>"+user.getName()+"</b>"+"start following you"));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+        holder.binding.openNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (type.equals("follow")){
+
+                    FirebaseDatabase.getInstance().getReference().child("notification").child(notification.getPostedBy())
+                                    .child(notification.getNotificationID()).child("checkOpen").setValue(true);
+                    holder.binding.openNotification.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    Intent intent=new Intent(context, CommentActivity.class);
+                    intent.putExtra("postId",notification.getPostID());
+                    intent.putExtra("postedBy",notification.getPostedBy());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+
+            }
+        });
+        Boolean checkOpen=notification.isCheckOpen();
+        if (checkOpen==true){
+            holder.binding.openNotification.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }else {
+
+        }
 
     }
 

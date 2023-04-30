@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.socialmedia.Adapter.CommentAdapter;
 import com.example.socialmedia.Model.Comment;
+import com.example.socialmedia.Model.Notification;
 import com.example.socialmedia.Model.Post;
 import com.example.socialmedia.Model.User;
 import com.example.socialmedia.R;
@@ -125,6 +126,16 @@ ArrayList<Comment>list=new ArrayList<>();
 
                                                      binding.commentET.setText("");
                                                      Toast.makeText(CommentActivity.this, "Commented", Toast.LENGTH_SHORT).show();
+                                                     Notification notification=new Notification();
+                                                     notification.setNotificationBy(FirebaseAuth.getInstance().getUid());
+                                                     notification.setNotificationAt(new Date().getTime());
+                                                     notification.setPostID(postId);
+                                                     notification.setPostedBy(postedBy);
+                                                     notification.setType("comment");
+
+                                                     FirebaseDatabase.getInstance().getReference().child("notification")
+                                                             .child(postedBy).push().setValue(notification);
+
                                                  }
                                              });
                                  }
